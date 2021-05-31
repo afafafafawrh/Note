@@ -1,5 +1,11 @@
 ### Binding in xaml
 
+```
+xmlns:local ="clr-namespace:test.ViewModel"
+```
+
+
+
 ```c#
 <ContentPage.BindingContext>
         <local:ItemDisplayPageViewModel/>
