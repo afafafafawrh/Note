@@ -59,7 +59,7 @@ In View
         <td>
             @if (item.price > 15)
             {
-            	<p>item.price</p>
+            	<p>@item.price</p>
             }
             else
             {
