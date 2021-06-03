@@ -21,5 +21,6 @@ Create page
         <(value):(Page)/>
     </x:Arguments>
 </NavigationPage>
+</TabbedPage>
 ```
 
