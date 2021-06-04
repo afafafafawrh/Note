@@ -28,3 +28,9 @@ p.s.  MainPage = new NavigationPage(new ToolBarPage());
 </ContentPage.Content>
 ```
 
+
+
+### When the Order is Secondary:
+
+It will show three dot at the top right corner like popup menu.
+
