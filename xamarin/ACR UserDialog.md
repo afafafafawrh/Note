@@ -86,3 +86,72 @@ UserDialogs.Instance.Toast(
 );         
 ```
 
+
+
+
+
+
+
+# Progress
+
+```C#
+ var cancelSrc = new CancellationTokenSource();
+var config = new ProgressDialogConfig()
+    .SetTitle("i ma Title")
+    .SetIsDeterministic(false)
+    .SetMaskType(MaskType.Black)
+    .SetCancel(onCancel: cancelSrc.Cancel);
+```
+
+
+
+Other way declare
+
+```c#
+var config = new ProgressDialogConfig()
+{
+    Title = "I am Title",
+    OnCancel = cancelSrc.Cancel,
+    IsDeterministic = false,
+    MaskType = MaskType.None,
+};
+```
+
+Finish Loading
+
+```c#
+using (UserDialogs.Instance.Progress(config)) {
+    try{
+    	await Task.Delay(TimeSpan.FromSeconds(3), cancelSrc.Token);
+    }
+    	catch { }
+}
+ UserDialogs.Instance.Alert(cancelSrc.IsCancellationRequested ? "Loading Cancelled" : "Loading Complete");
+```
+
+
+
+# Progress Bar
+
+
+
+```c#
+ var cancelled = false;
+using (var dlg = UserDialogs.Instance.Progress("I am progree", () => cancelled = true)) { 
+
+    while(!cancelled && dlg.PercentComplete < 100)
+    {
+
+        await Task.Delay(TimeSpan.FromMilliseconds(500));
+        dlg.PercentComplete += 10;
+    }
+    UserDialogs.Instance.Alert(cancelled ? "Loading Cancelled" : "Loading Complete");
+}
+
+//using CancellationTokenSource
+//change () => cancelled = true to  () => cancelSrc.Cancel()
+//chagne while(!cancelled to cancelSrc.IsCancellationRequested 
+//chage Alert(cancelled ?...) to  cancelSrc.IsCancellationRequested
+
+```
+
