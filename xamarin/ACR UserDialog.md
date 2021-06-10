@@ -94,6 +94,34 @@ UserDialogs.Instance.Toast(
 
 # Progress
 
+```c#
+public class ProgressDialogConfig
+{
+    public ProgressDialogConfig();
+
+    public static string DefaultCancelText { get; set; }
+    public static string DefaultTitle { get; set; }
+    public static MaskType DefaultMaskType { get; set; }
+    public static bool UseAndroidImmersiveMode { get; set; }
+    public string CancelText { get; set; }
+    public string Title { get; set; }
+    public bool AutoShow { get; set; }
+    public bool IsDeterministic { get; set; }
+    public MaskType MaskType { get; set; }
+    public Action OnCancel { get; set; }
+
+    public ProgressDialogConfig SetAutoShow(bool autoShow);
+    public ProgressDialogConfig SetCancel(string cancelText = null, Action onCancel = null);
+    public ProgressDialogConfig SetIsDeterministic(bool isDeterministic);
+    public ProgressDialogConfig SetMaskType(MaskType maskType);
+    public ProgressDialogConfig SetTitle(string title);
+}
+```
+
+
+
+
+
 ```C#
  var cancelSrc = new CancellationTokenSource();
 var config = new ProgressDialogConfig()
@@ -155,3 +183,65 @@ using (var dlg = UserDialogs.Instance.Progress("I am progree", () => cancelled =
 
 ```
 
+
+
+# ActionSheet & property
+
+
+
+```c#
+public class ActionSheetConfig : IAndroidStyleDialogConfig
+{
+    public ActionSheetConfig();
+
+    public static string DefaultCancelText { get; set; }
+    public static int? DefaultAndroidStyleId { get; set; }
+    public static bool DefaultUseBottomSheet { get; set; }
+    public static string DefaultDestructiveText { get; set; }
+    public static string DefaultItemIcon { get; set; }
+    public int? AndroidStyleId { get; set; }
+    public IList<ActionSheetOption> Options { get; set; }
+    public ActionSheetOption Destructive { get; set; }
+    public ActionSheetOption Cancel { get; set; }
+    public string Message { get; set; }
+    public string Title { get; set; }
+    //
+    // Summary:
+    //     This icon is applied to the list items, not to destructive or cancel
+    public string ItemIcon { get; set; }
+    //
+    // Summary:
+    //     This only currently applies to android
+    public bool UseBottomSheet { get; set; }
+
+    public ActionSheetConfig Add(string text, Action action = null, string icon = null);
+    public ActionSheetConfig SetCancel(string text = null, Action action = null, string icon = null);
+    public ActionSheetConfig SetDestructive(string text = null, Action action = null, string icon = null);
+    public ActionSheetConfig SetMessage(string msg);
+    public ActionSheetConfig SetTitle(string title);
+    public ActionSheetConfig SetUseBottomSheet(bool useBottomSheet);
+}
+```
+
+## Declare 
+
+```c#
+var config = new ActionSheetConfig()
+{
+    UseBottomSheet = true,
+    Message = "i am message",
+};
+
+config.Add("Item 1",
+           () => click()
+          );
+config.Add("item 2",
+           () => click()
+          );
+config.SetDestructive("Destruct", () => UserDialogs.Instance.Alert("Destructive BOOM Selected"), "user.png");
+config.SetCancel("Cancel", () => UserDialogs.Instance.Alert("Click cancel Button"), "chat.png");
+
+UserDialogs.Instance.ActionSheet(config);
+```
+
+![image-20210610171255673](C:\Users\cho\AppData\Roaming\Typora\typora-user-images\image-20210610171255673.png)
