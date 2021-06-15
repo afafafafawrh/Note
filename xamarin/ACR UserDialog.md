@@ -377,6 +377,9 @@ var input = await UserDialogs.Instance.PromptAsync(new PromptConfig()
     Placeholder = "input something",
     OkText = "OKK",
     CancelText = "Cancel",
+    OnTextChanged = args => {
+        args.IsValid = args.Value.Equals("GOOD");
+    }
 });
 Console.WriteLine(input.Text); // print input
 ```
