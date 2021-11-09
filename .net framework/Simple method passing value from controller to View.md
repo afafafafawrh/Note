@@ -31,7 +31,7 @@ public class Item{
 public ActionResult Index(){
    List<Item> items = new List<Item>() {
        new Item(){
-           name = "item1",
+           name = "item1",	
            price = 10
        },
        new Item() {
@@ -51,23 +51,41 @@ public ActionResult Index(){
 In View
 
 ```html
-<tbody>
-    @foreach(var item in ViewBag.itemList)
-    {
-    <tr>
-        <td>@item.name</td>
-        <td>
-            @if (item.price > 15)
-            {
-            	<p>@item.price</p>
-            }
-            else
-            {
-            	<p>5</p>
-            }
-        </td>
-    </tr>
-    }
-</tbody>
+<table>
+    <tbody>
+        @foreach(var item in ViewBag.itemList)
+        {
+            <tr>
+                <td>@item.name</td>
+                <td>
+                    @if (item.price > 15)
+                    { 
+                    <p>@item.price</p>
+                    }
+                    else
+                    {
+                    <p>5</p>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+//other method if else
+
+@{
+    var checking = ""; //put varible here
+}
+
+@if (item.price > 15)
+{
+	checking = "yes";
+}
+else
+{
+	checking = "No";
+}
+<td> @checking </td>
 ```
 
